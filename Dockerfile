@@ -6,4 +6,4 @@ COPY . .
 RUN npm run build
 EXPOSE 3000
 ENV MONGODB_URL mongodb://127.0.0.1:27017/
-CMD ["npm", "run", "dev"]
+CMD ["npm", "run", "start"]
