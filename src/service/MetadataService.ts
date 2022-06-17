@@ -17,8 +17,15 @@ export const getMetadataByUrl = async (
     const query = { url: url };
     const metadataByUrl = await collections.metadata?.findOne(query);
     if (metadataByUrl == null) {
-      const metadata: MetadataRes = await crawlMetadata(url);
+      const metadata: MetadataRes | null = await crawlMetadata(url);
+      if (metadata == null) {
+        callback(null, { code: 404, msg: "Can't not find page" } as IFailMsg);
+        return;
+      }
       const result = await collections.metadata?.insertOne(metadataResToDb(metadata));
+      if (!result) {
+        console.log('Failed to create new metadata information');
+      }
       callback(
         {
           code: 200,
@@ -27,14 +34,18 @@ export const getMetadataByUrl = async (
         } as ISuccessMsg,
         null
       );
-      if (!result) {
-        console.log('Failed to create new metadata information');
-      }
     } else if (+new Date() - metadataByUrl.updatedAt > thresholdTime) {
-      const metadata: MetadataRes = await crawlMetadata(url);
+      const metadata: MetadataRes | null = await crawlMetadata(url);
+      if (metadata == null) {
+        callback(null, { code: 404, msg: "Can't not find page" } as IFailMsg);
+        return;
+      }
       const result = await collections.metadata?.updateOne(query, {
         $set: metadataResToDb(metadata),
       });
+      if (!result) {
+        console.log('Failed to update metadata information');
+      }
       callback(
         {
           code: 200,
@@ -43,9 +54,6 @@ export const getMetadataByUrl = async (
         } as ISuccessMsg,
         null
       );
-      if (!result) {
-        console.log('Failed to update metadata information');
-      }
     } else {
       callback(
         {

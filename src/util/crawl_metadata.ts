@@ -10,22 +10,27 @@ import { MetadataRes } from '../interfaces';
 const aixosInstance = axios.create();
 
 export const crawlMetadata = async (url: string) => {
-  const response = await aixosInstance.get(url);
-  const html = await response.data;
-  const metadata = await metascraper([
-    metascraperUrl(),
-    metascraperTitle(),
-    metascraperImage(),
-    metascraperDate(),
-    metascraperDescription(),
-    metascraperPublisher(),
-  ])({ html, url });
-  return {
-    date: new Date(metadata.date).toISOString(),
-    description: metadata.description,
-    image: metadata.image,
-    publisher: metadata.publisher,
-    title: metadata.title,
-    url: url,
-  } as MetadataRes;
+  try {
+    const response = await aixosInstance.get(url);
+    const html = await response.data;
+    const metadata = await metascraper([
+      metascraperUrl(),
+      metascraperTitle(),
+      metascraperImage(),
+      metascraperDate(),
+      metascraperDescription(),
+      metascraperPublisher(),
+    ])({ html, url });
+    return {
+      date: new Date(metadata.date).toISOString(),
+      description: metadata.description,
+      image: metadata.image,
+      publisher: metadata.publisher,
+      title: metadata.title,
+      url: url,
+    } as MetadataRes;
+  } catch (error) {
+    console.error('crawling failed');
+    return null;
+  }
 };
