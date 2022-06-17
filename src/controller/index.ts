@@ -1,3 +1,3 @@
-import MetadataController from './MetadataController';
+import { getMetadata, getMetadatas } from './MetadataController';
 
-export { MetadataController };
+export { getMetadata, getMetadatas };

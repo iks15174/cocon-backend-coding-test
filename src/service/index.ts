@@ -1,3 +1,2 @@
-import { getMetadataByUrl, getAllMetadatas } from './MetadataService';
-import { collections, connect } from './db';
-export { getMetadataByUrl, getAllMetadatas, collections, connect };
+import { getMetadataByUrl, getAllMetadatas, thresholdTime } from './MetadataService';
+export { getMetadataByUrl, getAllMetadatas, thresholdTime };

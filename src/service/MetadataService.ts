@@ -1,5 +1,5 @@
-import { collections } from './db';
-import { crawlMetadata } from '../util/crawl_metadata';
+import { collections } from '../util/db';
+import { crawlMetadata } from '../util';
 import {
   ISuccessMsg,
   IFailMsg,
@@ -7,7 +7,7 @@ import {
   metadataDbToRes,
   metadataResToDb,
 } from '../interfaces';
-const thresholdTime = 60 * 60 * 1000;
+export const thresholdTime = 60 * 60 * 1000;
 
 export const getMetadataByUrl = async (
   url: string,
@@ -21,7 +21,7 @@ export const getMetadataByUrl = async (
       const result = await collections.metadata?.insertOne(metadataResToDb(metadata));
       callback(
         {
-          code: 201,
+          code: 200,
           msg: 'Succeed to get new metadata',
           data: metadata,
         } as ISuccessMsg,
