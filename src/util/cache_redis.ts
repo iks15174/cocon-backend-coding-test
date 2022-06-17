@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { RedisClientType, createClient } from 'redis';
 import { thresholdTime } from '../service';
+import validator from 'validator';
 
 const redisClient: RedisClientType = createClient({
   url: process.env.REDIS_URL,
@@ -14,6 +15,10 @@ export const setCache = async (key: string, value: any) => {
 export const getCache = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const url: string = req.body.url;
+    if (!validator.isURL(url)) {
+      res.status(400).send('invalid url');
+      return;
+    }
     const data = await redisClient.get(url);
     if (data !== null) {
       res.status(200).send(JSON.parse(data));
