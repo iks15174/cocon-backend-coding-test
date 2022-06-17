@@ -6,7 +6,7 @@ import validator from 'validator';
 const redisClient: RedisClientType = createClient({
   url: process.env.REDIS_URL,
 });
-const CacheExpiration: number = thresholdTime * 0.9;
+const CacheExpiration: number = thresholdTime;
 
 export const setCache = async (key: string, value: any) => {
   await redisClient.set(key, JSON.stringify(value), { EX: CacheExpiration });
