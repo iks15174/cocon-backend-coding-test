@@ -4,13 +4,20 @@ services:
     image: ts-node-web
     environment:
       - MONGODB_URL=mongodb://mongo_db:27017/
+      - REDIS_URL=redis://redis_server:6379/
     ports:
       - 3000:3000
     depends_on:
-      - db
+      - db, redis
 
   db:
     container_name: mongo_db
     image: mongo
     ports:
       - 27017:27017
+  
+  redis:
+    container_name: redis_server
+    image: redis:alpine
+    ports:
+      - "6379:6379"
