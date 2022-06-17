@@ -7,7 +7,7 @@ import {
   metadataDbToRes,
   metadataResToDb,
 } from '../interfaces';
-const thresholdTime = 10 * 1000;
+const thresholdTime = 60 * 60 * 1000;
 
 export const getMetadataByUrl = async (
   url: string,
