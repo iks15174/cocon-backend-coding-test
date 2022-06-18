@@ -312,4 +312,4 @@ mongo DB로부터 모든 메타데이터를 리스트로 가져온다. 메타데
 3. http://localhost:3000/metadata 또는 http://localhost:3000/metadatas을 통해 요청을 보낼 수 있다.
 
 ![Figure1 실행예시](/docs/imgs/execute.gif)
-실행 예시이다.
+실행 예시이다. 같은 url에 대해 두번째 요청부턴 빠르게 가져오는 것을 확인할 수 있다.
